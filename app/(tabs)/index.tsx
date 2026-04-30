@@ -1,7 +1,6 @@
 import { router } from 'expo-router';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { Button, Card, Text } from 'react-native-paper';
-// Notice the path: up out of (tabs), up out of app, into store.
+import { Card, FAB, Text } from 'react-native-paper';
 import { useStore } from '../../store/useStore';
 
 export default function DashboardScreen() {
@@ -9,30 +8,32 @@ export default function DashboardScreen() {
 
   return (
     <View style={styles.container}>
-      <Text variant="headlineMedium" style={styles.title}>Your Groups</Text>
-
-      {/* Using FlatList instead of ScrollView for better performance (Criterion 9) */}
       <FlatList
         data={groups}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 100 }} // Space for the FAB
         renderItem={({ item }) => (
           <Card style={styles.card} onPress={() => router.push(`/group/${item.id}`)}>
-            <Card.Title title={item.name} subtitle={`${item.members.length} members`} />
+            <Card.Title title={item.name} subtitle={`${item.members.length} members | ${item.expenses.length} expenses`} />
           </Card>
         )}
-        ListEmptyComponent={<Text>No groups yet. Create one!</Text>}
+        ListEmptyComponent={<Text style={styles.empty}>No groups yet. Tap the + to start!</Text>}
       />
 
-      <Button mode="contained" onPress={() => router.push('/modal/add-expense')} style={styles.button}>
-        Add Expense Modal
-      </Button>
+      {/* The beautiful floating action button to add a group */}
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={() => router.push('/modal/add-group')}
+        label="New Trip"
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#F5F5F5' },
-  title: { marginBottom: 16, fontWeight: 'bold' },
   card: { marginBottom: 12 },
-  button: { marginTop: 'auto', marginBottom: 20 }
+  empty: { textAlign: 'center', marginTop: 50, color: '#888' },
+  fab: { position: 'absolute', margin: 16, right: 0, bottom: 0 },
 });
