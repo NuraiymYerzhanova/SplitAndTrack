@@ -1,24 +1,29 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { PaperProvider } from 'react-native-paper';
+import { theme } from '../constants/theme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <PaperProvider theme={theme}>
       <Stack>
+        {/* The main tab interface */}
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        
+        {/* The details screen pushed onto the stack */}
+        <Stack.Screen 
+          name="group/[id]" 
+          options={{ title: 'Group Details', headerBackTitle: 'Back' }} 
+        />
+        
+        {/* The modal that slides up from the bottom */}
+        <Stack.Screen
+          name="modal/add-expense"
+          options={{
+            presentation: 'modal',
+            title: 'Add New Expense',
+          }}
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </PaperProvider>
   );
 }
