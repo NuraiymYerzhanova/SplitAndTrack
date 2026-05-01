@@ -6,7 +6,7 @@ A React Native (Expo) mobile application designed to help groups of friends mana
 
 | Dashboard | Add Expense (Camera/GPS) | Group Details |
 | :---: | :---: | :---: |
-| *![alt text](image.png)* | *(Add screenshot 2 here)* | *(Add screenshot 3 here)* |
+| ![alt text](image.png) | ![alt text](image-1.png) | ![alt text](image-2.png) |
 
 ## ✨ Core Features
 
